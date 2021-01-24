@@ -15,6 +15,7 @@ export default function AddDialog(props) {
     const [roomTypeSelector, setRoomTypeSelector] = React.useState("");
     const [noRooms, setNoRooms] = React.useState(1);
     const [roomType, setRoomType] = React.useState([]);
+    const [roomNo, setRoomNo] = React.useState(1);
 
     let newRoomType = [];
     let roomTypeColle = [];
@@ -43,20 +44,19 @@ export default function AddDialog(props) {
 
 
     function addRoom() {
-        let userId;
-        userId = firebase.getCurrentUserId();
-        for (let i = 0; i < noRooms; i++) {
+        var temp=roomNo;
+        for (var i = 0; i < noRooms; i++) {
+            temp += i
             try {
-                firebase.db.ref('guesthouses').child("Room Details").child("Rooms").push({
-                    houseId: userId.uid,
-                    typeName: roomTypeSelector,
-                })
+                console.log(roomTypeSelector)
+                firebase.addRooms(roomTypeSelector,temp)
+
             } catch (error) {
                 alert(error.message)
             }
 
         }
-        window.location.reload(false);
+        //window.location.reload(false);
     }
 
 
@@ -71,6 +71,7 @@ export default function AddDialog(props) {
                         id: 'room-type',
                     }}
                 >
+                    <option aria-label="None" value="" />
                     {roomType.map((val)=>(
                     <option value={val.typeName}>{val.typeName}</option>
                     ))}
@@ -78,10 +79,16 @@ export default function AddDialog(props) {
                 <FormHelperText>Select The type of room</FormHelperText>
             </FormControl>
             <FormControl margin="normal" required fullWidth>
+                <InputLabel>Room Number</InputLabel>
+                <Input id="roomNo" type="number" name="roomNo" autoComplete="off" autoFocus
+                       value={roomNo} onChange={e => setRoomNo(e.target.value)}/>
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
                 <InputLabel>Number of Rooms</InputLabel>
                 <Input id="maxPerson" type="number" name="maxPerson" autoComplete="off" autoFocus
                        value={noRooms} onChange={e => setNoRooms(e.target.value)}/>
             </FormControl>
+
 
             <Button
                 type="submit"
