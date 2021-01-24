@@ -1,82 +1,23 @@
 import React from 'react';
-import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import firebase from '../firebase'
 import withStyles from '@material-ui/core/styles/withStyles'
 import {Link, withRouter} from 'react-router-dom'
-import AppDrawer from "./AppDrawer";
+import AppDrawer from "../Dashboard/AppDrawer";
+import Button from '@material-ui/core/Button';
+import Services from "./MiniComponents/Services";
+import MyAccount from "./MiniComponents/MyAccount";
+import CompanyUsers from "./MiniComponents/CompanyUsers";
+import Clients from "./MiniComponents/Clients";
+import RoomList from "./MiniComponents/RoomList";
 
-const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
         display: 'flex',
-    },
-    toolbar: {
-        paddingRight: 24,
-        backgroundColor: theme.palette.secondary.main, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-        backgroundColor: theme.palette.secondary.main,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -86,16 +27,25 @@ const styles = theme => ({
         padding: theme.spacing(2),
         display: 'flex',
         overflow: 'auto',
-        flexDirection: 'column',
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+        paddingLeft: theme.spacing(35),
+        marginBottom:10,
     },
     fixedHeight: {
         height: 240,
+    }, appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
     },
 });
 
 function MyHouse(props) {
     const {classes} = props
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const [frag, setFrag] = React.useState(1);
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
@@ -112,28 +62,44 @@ function MyHouse(props) {
                 <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={fixedHeightPaper}>
-                                <h1>space 1</h1>
-                            </Paper>
-                        </Grid>
-
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <h1>space 2</h1>
-                            </Paper>
-                        </Grid>
-
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <h1>space 3</h1>
+                                <Button variant="outlined" color="secondary" onClick={event => (setFrag(1))}>
+                                    Rooms
+                                </Button>
+                                <Button variant="outlined" color="secondary" onClick={event => (setFrag(2))}>
+                                    Clients
+                                </Button>
+                                <Button variant="outlined" color="secondary" onClick={event => (setFrag(3))}>
+                                    Services
+                                </Button>
+                                <Button variant="outlined" color="secondary" onClick={event => (setFrag(4))}>
+                                    Company & Users
+                                </Button>
+                                <Button variant="outlined" color="secondary" onClick={event => (setFrag(5))}>
+                                    My Account
+                                </Button>
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Box pt={4}>
-                        <h1>space 4</h1>
-                    </Box>
+
+                    <div>
+                        {
+                            frag === 1 && <RoomList/>
+                        }
+                        {
+                            frag === 2 && <Services/>
+                        }
+                        {
+                            frag === 3 && <MyAccount/>
+                        }
+                        {
+                            frag === 4 && <CompanyUsers/>
+                        }
+                        {
+                            frag === 5 && <Clients/>
+                        }
+                    </div>
                 </Container>
             </main>
         </div>

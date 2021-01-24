@@ -102,7 +102,7 @@ const styles = theme => ({
 
 function AppDrawer(props) {
     const { classes } = props
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
