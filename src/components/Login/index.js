@@ -4,6 +4,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { Link, withRouter } from 'react-router-dom'
 import firebase from '../firebase'
+import homepagepic from "../Asserts/Images/homepagepic.jpg";
 
 const styles = theme => ({
 	main: {
@@ -16,6 +17,9 @@ const styles = theme => ({
 			marginLeft: 'auto',
 			marginRight: 'auto',
 		},
+		backgroundImage: "url(" + homepagepic + ")",
+		backgroundSize: "cover",
+		backgroundPosition: "top center"
 	},
 	paper: {
 		marginTop: theme.spacing.unit * 8,

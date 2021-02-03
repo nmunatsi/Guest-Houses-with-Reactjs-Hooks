@@ -22,6 +22,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import AddDialog from "./AddRooms";
 import RoomTypesTable from "./AddTypeDialog/RoomTypesTable";
+import RoomsTable from "./AddRooms/RoomsTable";
 
 
 const styles = theme => ({
@@ -149,6 +150,8 @@ function RoomList(props) {
                 <Grid container spacing={3} className={classes.tables}>
                     <Grid item xs={12}>
                         {options[selectedIndex] === 'Room Type' && <RoomTypesTable/>}
+                        {options[selectedIndex] === 'Rooms' &&<RoomsTable/>}
+
                     </Grid>
                 </Grid>
 

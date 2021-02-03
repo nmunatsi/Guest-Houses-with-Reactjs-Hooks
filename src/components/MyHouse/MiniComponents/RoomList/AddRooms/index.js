@@ -56,7 +56,7 @@ export default function AddDialog(props) {
             }
 
         }
-        //window.location.reload(false);
+        window.location.reload(false);
     }
 
 
@@ -88,7 +88,6 @@ export default function AddDialog(props) {
                 <Input id="maxPerson" type="number" name="maxPerson" autoComplete="off" autoFocus
                        value={noRooms} onChange={e => setNoRooms(e.target.value)}/>
             </FormControl>
-
 
             <Button
                 type="submit"

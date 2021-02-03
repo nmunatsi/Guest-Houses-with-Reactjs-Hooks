@@ -11,6 +11,7 @@ import firebase from '../firebase'
 import Bookings from "../Bookings";
 import Rooms from "../Rooms";
 import MyHouse from "../MyHouse";
+import AddHouseImages from "../MyHouse/MiniComponents/AddHouseImages";
 
 const theme = createMuiTheme()
 
@@ -36,6 +37,7 @@ export default function App() {
                     <Route exact path="/bookings" component={Bookings}/>
                     <Route exact path="/rooms" component={Rooms}/>
                     <Route exact path="/myHouse" component={MyHouse}/>
+                    <Route exact path="/addHouseImages" component={AddHouseImages}/>
                 </Switch>
             </Router>
         </MuiThemeProvider>

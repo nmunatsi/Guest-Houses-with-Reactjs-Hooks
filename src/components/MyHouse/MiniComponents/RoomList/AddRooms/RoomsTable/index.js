@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Checkbox,
     makeStyles,
@@ -6,10 +6,14 @@ import {
     TableContainer, TableHead, TableRow
 } from "@material-ui/core";
 import firebase from "../../../../../firebase";
+import Room from "../../../../../Models/Room"
+import AnnouncementIcon from '@material-ui/icons/Announcement';
+import ClearIcon from '@material-ui/icons/Clear';
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 650,
+        minWidth: 550,
     },
     body: {
         fontSize: 14,
@@ -19,10 +23,11 @@ const useStyles = makeStyles({
 
 export default function RoomsTable(props) {
     const classes = useStyles();
-    const [roomType, setRoomType] = React.useState([]);
+    const [rooms, setRooms] = React.useState([]);
+    const [flaga, setFlaga] = useState(0);
 
-    let newRoomType = [];
-    let roomTypeColle = [];
+    let newRoom = [];
+    let roomColle = [];
 
     let userId;
     userId = firebase.getCurrentUserId();
@@ -32,23 +37,34 @@ export default function RoomsTable(props) {
         firebase.db.ref('guesthouses').child("Rooms Details").child("Rooms").on('value', (snapshot) => {
             snapshot.forEach(data => {
                 const dataVal = data.val()
-                if (dataVal.houseId===userId) {
-                    newRoomType.push({
-                        typeName: dataVal.typeName,
-                        maxPerson: dataVal.maxPerson,
-                        price: dataVal.price,
-                        hasSingleUse: dataVal.hasSingleUse,
+                if (dataVal.houseId === userId) {
+                    firebase.db.ref('guesthouses').child("Rooms Details").child("RoomTypes").on('value', (snapshot) => {
+                        snapshot.forEach(child => {
+                            const roomTypeVal = child.val()
+                            if (dataVal.roomType === roomTypeVal.typeName) {
+                                let roomObj = new Room(dataVal.roomNo, dataVal.houseId, roomTypeVal.maxPerson,
+                                    roomTypeVal.price, dataVal.roomType, dataVal.roomStatus, roomTypeVal.hasSingleUse)
+                                newRoom.push({
+                                    roomObj
+                                })
+                            }
+                        })
+
                     })
                 }
-
             })
-            roomTypeColle = newRoomType;
-
+            console.log(newRoom)
+            roomColle = newRoom;
         })
+        console.log(roomColle)
 
-        setRoomType(roomTypeColle)
-
+        setRooms(roomColle)
     }, [])
+
+
+    function getAnnouncement(roomStatus) {
+
+    }
 
 
     return (
@@ -57,23 +73,36 @@ export default function RoomsTable(props) {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Type</TableCell>
-                            <TableCell align="left">Price</TableCell>
+                            <TableCell align="left">Room No.</TableCell>
+                            <TableCell align="left">Room Type</TableCell>
                             <TableCell align="left">Maximum Person</TableCell>
+                            <TableCell align="left">Price</TableCell>
                             <TableCell align="center">Has Single Use</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        {roomType.map((val) => (
+                        {rooms.map((val) => (
                                 <TableRow>
-                                    <TableCell align="left">{val.typeName}</TableCell>
-                                    <TableCell align="left">{val.price}</TableCell>
-                                    <TableCell align="left">{val.maxPerson}</TableCell>
+                                    <TableCell align="left">{val.roomObj.roomNo}</TableCell>
+                                    <TableCell align="left">{val.roomObj.roomType}</TableCell>
+                                    <TableCell align="left">{val.roomObj.maxPerson}</TableCell>
+                                    <TableCell align="left">{val.roomObj.price}</TableCell>
                                     <TableCell align="center">
                                         <Checkbox
-                                            checked={val.hasSingleUse}
+                                            checked={val.roomObj.hasSingleUse}
                                             inputProps={{'aria-label': 'primary checkbox'}}/>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <Button>
+                                            <AnnouncementIcon
+                                                className={classes.icon}/>
+                                        </Button>
+                                        <Button>
+                                            <ClearIcon className={classes.icon}/>
+                                        </Button>
+
                                     </TableCell>
                                 </TableRow>
                             )
