@@ -1,6 +1,7 @@
 import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firebase-database'
+import 'firebase/storage'
 
 const firebaseConfig = {
     apiKey: "AIzaSyCHxRrIh_ird6JeDRaKU_7bm2EzK9bsY3s",
@@ -18,6 +19,7 @@ class Firebase {
         app.initializeApp(firebaseConfig)
         this.auth = app.auth()
         this.db = app.database()
+        this.storageRef = app.storage()
     }
 
     login(email, password) {
@@ -35,7 +37,7 @@ class Firebase {
         })
     }
 
-    addHouse(name, plotN0, city, phone, email) {
+    addHouse(name, plotN0, city, phone, email, url) {
         if (!this.auth.currentUser) {
             return alert('Not authorized')
         }
@@ -49,10 +51,10 @@ class Firebase {
             city: city,
             phone: phone,
             email: email,
+            imageUrl:url,
+        }).catch((error) => {
+            alert(error.message);
         })
-            .catch((error) => {
-                alert(error.message);
-            })
 
     }
 
@@ -76,7 +78,7 @@ class Firebase {
     }
 
     //adding a room
-    addRooms(roomType,roomNo){
+    addRooms(roomType, roomNo) {
         if (!this.auth.currentUser) {
             return alert('Not authorized')
         }
@@ -86,8 +88,8 @@ class Firebase {
         return this.db.ref('guesthouses').child("Rooms Details").child("Rooms").push({
             houseId: user.uid,
             roomType: roomType,
-            roomNo:"Room "+roomNo,
-            roomStatus:1,
+            roomNo: "Room " + roomNo,
+            roomStatus: 1,
         }).catch((error) => {
             alert(error.message);
         })
@@ -135,6 +137,23 @@ class Firebase {
         return user.uid;
     }
 
+    async addImages(fileNames) {
+        let user;
+        user = app.auth().currentUser;
+        let allImages = [];
+
+        allImages = fileNames;
+
+        allImages.forEach(file => {
+            return this.db.ref('guesthouses').child("Rooms Details").child("Rooms").child("images").push({
+                houseId: user.uid,
+                imgUrl: file.fireBaseUrl,
+                fileName: file.name
+            }).catch((error) => {
+                alert(error.message);
+            })
+        })
+    }
 }
 
 export default new Firebase()

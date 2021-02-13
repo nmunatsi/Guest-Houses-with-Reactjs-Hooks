@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
     Checkbox,
     makeStyles,
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
 export default function RoomsTable(props) {
     const classes = useStyles();
     const [rooms, setRooms] = React.useState([]);
-    const [flaga, setFlaga] = useState(0);
 
     let newRoom = [];
     let roomColle = [];
@@ -60,11 +59,6 @@ export default function RoomsTable(props) {
 
         setRooms(roomColle)
     }, [])
-
-
-    function getAnnouncement(roomStatus) {
-
-    }
 
 
     return (

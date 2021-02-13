@@ -1,17 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Link, withRouter} from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
 import {
-    ButtonGroup, Checkbox,
-    ClickAwayListener, Divider,
+    ButtonGroup,
+    ClickAwayListener,
     Grow,
     MenuItem,
     MenuList,
     Paper,
-    Popper, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow
+    Popper
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -67,7 +66,7 @@ function RoomList(props) {
     const [open, setOpen] = React.useState(false);
     const [openDia, setOpenDia] = React.useState(false);
     const anchorRef = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +13,7 @@ import MyAccount from "./MiniComponents/MyAccount";
 import CompanyUsers from "./MiniComponents/CompanyUsers";
 import Clients from "./MiniComponents/Clients";
 import RoomList from "./MiniComponents/RoomList";
+import Room from "../Models/Room";
 
 
 const styles = theme => ({
@@ -46,6 +47,7 @@ const styles = theme => ({
 function MyHouse(props) {
     const {classes} = props
     const [frag, setFrag] = React.useState(1);
+
 
     if (!firebase.getCurrentUsername()) {
         // not logged in
