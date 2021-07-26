@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import './styles.css'
-import HomePage from '../HomePage'
-import Login from '../Login'
-import Register from '../Register'
-import Dashboard from '../Dashboard'
+import HomePage from '../../Pages/HomePage'
+import Login from '../../Pages/Login'
+import Register from '../../Pages/Register'
+import Dashboard from '../../Pages/Dashboard'
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
 import {CssBaseline, CircularProgress} from '@material-ui/core'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import firebase from '../firebase'
+import firebase from '../../Backend/firebase'
 import Bookings from "../Bookings";
-import Rooms from "../Rooms";
+import Rooms from "../../Pages/Rooms";
 import MyHouse from "../MyHouse";
-import AddHouseImages from "../MyHouse/MiniComponents/AddHouseImages";
+import AddHouseImages from "../MyHouse/Settings/AddHouseImages";
+import RoomMaintanance from "../../Pages/RoomMaintanance";
 
 const theme = createMuiTheme()
 
@@ -38,6 +39,7 @@ export default function App() {
                     <Route exact path="/rooms" component={Rooms}/>
                     <Route exact path="/myHouse" component={MyHouse}/>
                     <Route exact path="/addHouseImages" component={AddHouseImages}/>
+                    <Route exact path="/rooms/roomMaintanance" component={RoomMaintanance}/>
                 </Switch>
             </Router>
         </MuiThemeProvider>

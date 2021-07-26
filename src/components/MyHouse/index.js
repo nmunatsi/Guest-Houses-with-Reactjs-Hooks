@@ -1,19 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import firebase from '../firebase'
+import firebase from '../../Backend/firebase'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Link, withRouter} from 'react-router-dom'
-import AppDrawer from "../Dashboard/AppDrawer";
+import { withRouter} from 'react-router-dom'
+import AppDrawer from "../AppDrawer";
 import Button from '@material-ui/core/Button';
-import Services from "./MiniComponents/Services";
-import MyAccount from "./MiniComponents/MyAccount";
-import CompanyUsers from "./MiniComponents/CompanyUsers";
-import Clients from "./MiniComponents/Clients";
-import RoomList from "./MiniComponents/RoomList";
-import Room from "../Models/Room";
+import Services from "./Settings/Services";
+import MyAccount from "./Settings/MyAccount";
+import CompanyUsers from "./Settings/CompanyUsers";
+import Clients from "./Settings/Clients";
+import RoomList from "./Settings/RoomList";
 
 
 const styles = theme => ({

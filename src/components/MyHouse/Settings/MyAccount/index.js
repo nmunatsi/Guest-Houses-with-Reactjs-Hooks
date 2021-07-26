@@ -1,17 +1,11 @@
 import React from 'react';
-import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import firebase from '../../Backend/firebase'
 import withStyles from '@material-ui/core/styles/withStyles'
 import { withRouter} from 'react-router-dom'
-import AppDrawer from "../AppDrawer";
 
-// eslint-disable-next-line no-unused-vars
-const drawerWidth = 240;
 
 const styles = theme => ({
     root: {
@@ -25,59 +19,40 @@ const styles = theme => ({
         padding: theme.spacing(2),
         display: 'flex',
         overflow: 'auto',
-        flexDirection: 'column',
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+        paddingLeft: theme.spacing(35),
     },
     fixedHeight: {
         height: 240,
+    },appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
     },
 });
 
-function Bookings(props) {
+function MyAccount(props) {
     const {classes} = props
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-    if (!firebase.getCurrentUsername()) {
-        // not logged in
-        alert('Please login first')
-        props.history.replace('/login')
-        return null
-    }
-
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppDrawer/>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-
-                        <Grid item xs={12} md={8} lg={9}>
-                            <Paper className={fixedHeightPaper}>
-                                <h1>space 1</h1>
-                            </Paper>
-                        </Grid>
-
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Paper className={fixedHeightPaper}>
-                                <h1>space 2</h1>
-                            </Paper>
-                        </Grid>
-
                         <Grid item xs={12}>
                             <Paper className={classes.paper}>
-                                <h1>space 3</h1>
+                                <h1>my acc</h1>
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Box pt={4}>
-                        <h1>space 4</h1>
-                    </Box>
                 </Container>
             </main>
         </div>
     );
-
 }
 
-export default withRouter(withStyles(styles)(Bookings))
+export default withRouter(withStyles(styles)(MyAccount))
